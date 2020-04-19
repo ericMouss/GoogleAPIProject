@@ -1,7 +1,11 @@
 package com.example.tstcarte;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Button bt;
+    private final static int LOCATION_REQ_CODE = 456;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +35,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        // demande de synchronisation de carte
         mapFragment.getMapAsync(this);
         bt = (Button) findViewById(R.id.bt);
         bt.setOnClickListener(this);
+
+        // demande de permission pour la géolocalisation
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQ_CODE);
+        }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(mMap != null){
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+    }
 
     /**
      * Manipulates the map once available.
@@ -50,6 +70,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setOnInfoWindowClickListener(this);
         mMap.setInfoWindowAdapter(this);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mMap.setMyLocationEnabled(true);
+        }
     }
 
     public void onClick(View v) {
