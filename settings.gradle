@@ -1,3 +1,4 @@
 rootProject.name='GoogleAPIProject'
 include ':app'
 include ':app:tstcarte'
+include ':app:tstcarte:bikeproject'
