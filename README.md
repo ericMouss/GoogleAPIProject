@@ -4,7 +4,7 @@
 
 Cette application est faite dans le cadre du cours de programmation mobile de première année du cycle ingénieur, elle 
 consiste à géolocaliser les stations de vélo sur la ville de Lyon, pour cela 
-elle utilise l'API de JCDecaux qui fournit les données en temps réelles des stations de vélo
+elle utilise l'API de JCDecaux qui fournit les données en temps réel des stations de vélo
 Ensuite on géolocalise l'utilisateur pour lui donner la direction de ces dernières.
 
 See real examples:
@@ -22,7 +22,7 @@ Sample:
 
 
 ## Usage
-Service de géolocalisation pour les utilisateurs habitants dans les grandes villes tel que Lyon
+Service de géolocalisation pour les utilisateurs habitants dans les grandes villes telle que Lyon
 
 ### Screenshots
 
